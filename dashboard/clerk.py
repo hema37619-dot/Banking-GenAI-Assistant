@@ -1,7 +1,7 @@
 import streamlit as st
 from rag.retriever import get_context
 from rag.llm import ask_llm
-from history.chat_history import save_history
+from history.chat_history import save_history, get_user_history
 
 def clerk_dashboard():
     st.title("💬 Clerk Dashboard")
@@ -15,15 +15,17 @@ def clerk_dashboard():
             st.warning("Please enter a question.")
         else:
             with st.spinner("Searching..."):
-                context = get_context(question)
-                answer = ask_llm(question, context)
-            st.subheader("Answer:")
-            st.write(answer)
-            save_history(st.session_state["username"], question, answer)
+                try:
+                    context = get_context(question)
+                    answer = ask_llm(question, context)
+                    st.subheader("Answer:")
+                    st.write(answer)
+                    save_history(st.session_state["username"], question, answer)
+                except Exception:
+                    st.error("⚠️ No documents found. Please ask Admin to upload a PDF first.")
 
     st.divider()
     st.subheader("Your Chat History")
-    from history.chat_history import get_user_history
     history = get_user_history(st.session_state["username"])
     if history:
         for row in history:

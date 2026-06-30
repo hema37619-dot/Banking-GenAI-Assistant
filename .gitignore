@@ -5,7 +5,4 @@ __pycache__/
 *.pyc
 *.pyo
 .env
-database/chroma_db/
-database/*.db
-rag/database/chroma_db/
 uploads/
