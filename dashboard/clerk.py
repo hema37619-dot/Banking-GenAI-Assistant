@@ -1,7 +1,7 @@
 import streamlit as st
 from rag.retriever import get_context
 from rag.llm import ask_llm
-from history.chat_history import save_history,get_user_ history
+from history.chat_history import save_history,get_user_history
 
 def clerk_dashboard():
     st.title("💬 Clerk Dashboard")
